@@ -23,7 +23,7 @@ public class JwtUtil {
 
     private PublicKey publicKeyObject;
 
-    @Value("${user-service.path.publicKey}")
+    @Value("${security.publicKey}")
     private String GET_PUBLIC_KEY_URL;
 
 
