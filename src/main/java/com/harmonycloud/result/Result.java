@@ -8,20 +8,20 @@ import java.io.Serializable;
  */
 public class Result implements Serializable {
     private static final long serialVersionUID = 1L;
-    private CodeMsg errorMessage;
+    private Object errorMessage;
     private Boolean success;
     private Object data;
 
-    public CodeMsg getErrorMessage() {
+    public Object getErrorMessage() {
         return errorMessage;
     }
 
-    public void setErrorMessage(CodeMsg errorMessage) {
+    public void setErrorMessage(Object errorMessage) {
         this.errorMessage = errorMessage;
     }
 
     public Result(CodeMsg errorMessage, Boolean success) {
-        this.errorMessage = errorMessage;
+        this.errorMessage = errorMessage.getMsg();
         this.success = success;
     }
 

@@ -18,15 +18,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         super.configure(auth);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/images/**").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/configuration/ui").permitAll()
+                .antMatchers("/configuration/security").permitAll()
                 .anyRequest().access("hasAnyRole('CLERICAL','ADMIN')");
         http.csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+
     }
 }
