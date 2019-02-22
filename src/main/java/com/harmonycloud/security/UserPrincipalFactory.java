@@ -21,7 +21,7 @@ public class UserPrincipalFactory {
         }
 
         String userId = claims.get("userId").toString();
-        String username = claims.get("username").toString();
-        return new UserPrincipal(userId,username,authorities);
+        String loginName = claims.get("loginname").toString();
+        return new UserPrincipal(userId,loginName,authorities);
     }
 }

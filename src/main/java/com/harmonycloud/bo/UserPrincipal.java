@@ -11,13 +11,13 @@ public class UserPrincipal implements UserDetails {
 
     private String userId;
 
-    private String username;
+    private String loginName;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String userId, String username, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(String userId, String loginName, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
-        this.username = username;
+        this.loginName = loginName;
         this.authorities = authorities;
     }
 
@@ -69,6 +69,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return loginName;
     }
 }
