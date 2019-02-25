@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,16 +26,15 @@ public class ContactPersonService {
     @Transactional(rollbackFor = Exception.class)
     public String register(List<ContactPerson> contactPersonList) {
         if (contactPersonList != null) {
-            for (ContactPerson cp :
-                    contactPersonList) {
-                cpRepository.save(cp);
+            for (int i=0;i<contactPersonList.size();i++) {
+                cpRepository.save(contactPersonList.get(i));
             }
         }
         return null;
     }
 
     public List<ContactPerson> getContactPerson(Integer num) {
-        List<ContactPerson> ContactPersonList = null;
+        List<ContactPerson> ContactPersonList = new ArrayList<ContactPerson>();
         try {
             ContactPersonList =  cpRepository.findByPatientId(num);
         } catch (Exception e) {

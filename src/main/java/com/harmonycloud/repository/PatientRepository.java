@@ -16,13 +16,15 @@ import java.util.List;
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
 
 
-    List<Patient> findByPatientId(Integer num);
+    Patient findByPatientId(Integer id);
 
-    List<Patient> findByMobilePhone(Integer num);
-
-    List<Patient> findByEnglishGivenName(String str);
-
-    List<Patient> findByEnglishSurname(String str);
+    /**
+     * 模糊查询
+     * @param num
+     * @return
+     */
+    @Query(nativeQuery = true,value = "select * from \"patient\" where  to_char(\"mobile_phone\") like '%'||?1||'%' or to_char(\"patient_id\") like '%'||?1||'%' or \"english_given_name\" like '%'||?1||'%' or \"english_surname\" like '%'||?1||'%'")
+    List<Patient> findBysearchdata(String num);
 
     @Transactional(rollbackFor = Exception.class)
     @Modifying
@@ -30,10 +32,10 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
             "p.chineseName = ?6, p.dateOrBirth = ?7, p.sex = ?8, p.mobilePhoneAreaCode = ?9, p.mobilePhone = ?10, " +
             "p.homePhoneAreaCode = ?11, p.homePhone = ?12, p.room = ?13, p.floor = ?14, p.block = ?15, p.building = ?16," +
             "p.estate = ?17, p.street = ?18, p.region = ?19, p.district = ?20 where p.patientId = ?1")
-    int updateById(Integer patientId, String documentType, Integer documentNumber, String englishSurname,
-                   String englishGivenName, String chineseName, Date dateOrBirth, String sex,
-                   Integer mobilePhoneAreaCode, Integer mobilePhone, Integer homePhoneAreaCode,
-                   Integer homePhone, Integer room, Integer floor, String block, String building,
+    int updateById(Integer patientId, String documentType, String documentNumber, String englishSurname,
+                   String englishGivenName, String chineseName, String dateOrBirth, String sex,
+                   String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode,
+                   String homePhone, String room, String floor, String block, String building,
                    String estate, String street, String region, String district);
 
 

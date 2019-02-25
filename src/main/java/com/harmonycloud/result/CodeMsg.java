@@ -24,6 +24,7 @@ public class CodeMsg {
     public static CodeMsg REGISTER_FAIL = new CodeMsg("register is failed");
     public static CodeMsg UPDATE_SUCCESS = new CodeMsg("update is success");
     public static CodeMsg UPDATE_FAIL = new CodeMsg( "update is failed");
+    public static CodeMsg SERVICE_ERROR=new CodeMsg("Service error");
 
 
 

@@ -1,9 +1,6 @@
 package com.harmonycloud.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author qidong
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 @Table(name = "contact_person")
 public class ContactPerson {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer contactPersonId;
     @Column(name = "patient_id")
     private Integer patientId;
@@ -23,13 +21,13 @@ public class ContactPerson {
     @Column(name = "chinese_name")
     private String chineseName;
     @Column(name = "mobile_phone_area_code")
-    private Integer mobilePhoneAreaCode;
+    private String mobilePhoneAreaCode;
     @Column(name = "mobile_phone")
-    private Integer mobilePhone;
+    private String mobilePhone;
     @Column(name = "other_phone_area_code")
-    private Integer otherPhoneAreaCode;
+    private String otherPhoneAreaCode;
     @Column(name = "other_phone")
-    private Integer otherPhone;
+    private String otherPhone;
     @Column(name = "email")
     private String email;
     @Column(name = "display_order")
@@ -38,11 +36,10 @@ public class ContactPerson {
     public ContactPerson() {
     }
 
-    public ContactPerson(Integer contactPersonId, Integer patientId, String relationship,
-                         String englishName, String chineseName, Integer mobilePhoneAreaCode,
-                         Integer mobilePhone, Integer otherPhoneAreaCode, Integer otherPhone, String email,
+    public ContactPerson(Integer patientId, String relationship,
+                         String englishName, String chineseName, String mobilePhoneAreaCode,
+                         String mobilePhone, String otherPhoneAreaCode, String otherPhone, String email,
                          Integer displayOrder) {
-        this.contactPersonId = contactPersonId;
         this.patientId = patientId;
         this.relationship = relationship;
         this.englishName = englishName;
@@ -95,35 +92,35 @@ public class ContactPerson {
         this.chineseName = chineseName;
     }
 
-    public Integer getMobilePhoneAreaCode() {
+    public String getMobilePhoneAreaCode() {
         return mobilePhoneAreaCode;
     }
 
-    public void setMobilePhoneAreaCode(Integer mobilePhoneAreaCode) {
+    public void setMobilePhoneAreaCode(String mobilePhoneAreaCode) {
         this.mobilePhoneAreaCode = mobilePhoneAreaCode;
     }
 
-    public Integer getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public void setMobilePhone(Integer mobilePhone) {
+    public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
 
-    public Integer getOtherPhoneAreaCode() {
+    public String getOtherPhoneAreaCode() {
         return otherPhoneAreaCode;
     }
 
-    public void setOtherPhoneAreaCode(Integer otherPhoneAreaCode) {
+    public void setOtherPhoneAreaCode(String otherPhoneAreaCode) {
         this.otherPhoneAreaCode = otherPhoneAreaCode;
     }
 
-    public Integer getOtherPhone() {
+    public String getOtherPhone() {
         return otherPhone;
     }
 
-    public void setOtherPhone(Integer otherPhone) {
+    public void setOtherPhone(String otherPhone) {
         this.otherPhone = otherPhone;
     }
 

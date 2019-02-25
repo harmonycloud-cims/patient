@@ -23,7 +23,7 @@ public interface ContactPersonRepository extends JpaRepository<ContactPerson,Int
             "cp.mobilePhoneAreaCode = ?5, cp.mobilePhone = ?6, cp.otherPhoneAreaCode = ?7, cp.otherPhone = ?8," +
             "cp.email = ?9, cp.displayOrder = ?10 where cp.patientId = ?1")
     int updateByid(Integer patientId, String relationship,
-                   String englishName, String chineseName, Integer mobilePhoneAreaCode,
-                   Integer mobilePhone, Integer otherPhoneAreaCode, Integer otherPhone, String email,
+                   String englishName, String chineseName, String mobilePhoneAreaCode,
+                   String mobilePhone, String otherPhoneAreaCode, String otherPhone, String email,
                    Integer displayOrder);
 }

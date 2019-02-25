@@ -1,9 +1,6 @@
 package com.harmonycloud.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -18,7 +15,7 @@ public class Patient {
     @Column(name = "document_type")
     private String documentType;
     @Column(name = "document_number")
-    private Integer documentNumber;
+    private String documentNumber;
     @Column(name = "english_surname")
     private String englishSurname;
     @Column(name = "english_given_name")
@@ -26,21 +23,21 @@ public class Patient {
     @Column(name = "chinese_name")
     private String chineseName;
     @Column(name = "date_or_birth")
-    private Date dateOrBirth;
+    private String dateOrBirth;
     @Column(name = "sex")
     private String sex;
     @Column(name = "mobile_phone_area_code")
-    private Integer mobilePhoneAreaCode;
+    private String mobilePhoneAreaCode;
     @Column(name = "mobile_phone")
-    private Integer mobilePhone;
+    private String mobilePhone;
     @Column(name = "home_phone_area_code")
-    private Integer homePhoneAreaCode;
+    private String homePhoneAreaCode;
     @Column(name = "home_phone")
-    private Integer homePhone;
+    private String homePhone;
     @Column(name = "room")
-    private Integer room;
+    private String room;
     @Column(name = "floor")
-    private Integer floor;
+    private String floor;
     @Column(name = "block")
     private String block;
     @Column(name = "building")
@@ -57,12 +54,7 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Integer patientId, String documentType, Integer documentNumber, String englishSurname,
-                   String englishGivenName, String chineseName, Date dateOrBirth, String sex,
-                   Integer mobilePhoneAreaCode, Integer mobilePhone, Integer homePhoneAreaCode,
-                   Integer homePhone, Integer room, Integer floor, String block, String building,
-                   String estate, String street, String region, String district) {
-        this.patientId = patientId;
+    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOrBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district) {
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.englishSurname = englishSurname;
@@ -100,11 +92,11 @@ public class Patient {
         this.documentType = documentType;
     }
 
-    public Integer getDocumentNumber() {
+    public String getDocumentNumber() {
         return documentNumber;
     }
 
-    public void setDocumentNumber(Integer documentNumber) {
+    public void setDocumentNumber(String documentNumber) {
         this.documentNumber = documentNumber;
     }
 
@@ -132,11 +124,11 @@ public class Patient {
         this.chineseName = chineseName;
     }
 
-    public Date getDateOrBirth() {
+    public String getDateOrBirth() {
         return dateOrBirth;
     }
 
-    public void setDateOrBirth(Date dateOrBirth) {
+    public void setDateOrBirth(String dateOrBirth) {
         this.dateOrBirth = dateOrBirth;
     }
 
@@ -148,51 +140,51 @@ public class Patient {
         this.sex = sex;
     }
 
-    public Integer getMobilePhoneAreaCode() {
+    public String getMobilePhoneAreaCode() {
         return mobilePhoneAreaCode;
     }
 
-    public void setMobilePhoneAreaCode(Integer mobilePhoneAreaCode) {
+    public void setMobilePhoneAreaCode(String mobilePhoneAreaCode) {
         this.mobilePhoneAreaCode = mobilePhoneAreaCode;
     }
 
-    public Integer getMobilePhone() {
+    public String getMobilePhone() {
         return mobilePhone;
     }
 
-    public void setMobilePhone(Integer mobilePhone) {
+    public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
     }
 
-    public Integer getHomePhoneAreaCode() {
+    public String getHomePhoneAreaCode() {
         return homePhoneAreaCode;
     }
 
-    public void setHomePhoneAreaCode(Integer homePhoneAreaCode) {
+    public void setHomePhoneAreaCode(String homePhoneAreaCode) {
         this.homePhoneAreaCode = homePhoneAreaCode;
     }
 
-    public Integer getHomePhone() {
+    public String getHomePhone() {
         return homePhone;
     }
 
-    public void setHomePhone(Integer homePhone) {
+    public void setHomePhone(String homePhone) {
         this.homePhone = homePhone;
     }
 
-    public Integer getRoom() {
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(Integer room) {
+    public void setRoom(String room) {
         this.room = room;
     }
 
-    public Integer getFloor() {
+    public String getFloor() {
         return floor;
     }
 
-    public void setFloor(Integer floor) {
+    public void setFloor(String floor) {
         this.floor = floor;
     }
 

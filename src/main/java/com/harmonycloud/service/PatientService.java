@@ -5,13 +5,16 @@ import com.harmonycloud.entity.Patient;
 import com.harmonycloud.repository.PatientRepository;
 import com.harmonycloud.result.CodeMsg;
 import com.harmonycloud.result.Result;
-import com.harmonycloud.dto.PatientAndPerson;
+import com.harmonycloud.bo.PatientAndPerson;
+import com.harmonycloud.vo.ContactPersonVo;
+import com.harmonycloud.vo.CpVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,88 +26,75 @@ public class PatientService {
     @Resource
     private ContactPersonService cpService;
 
-    public Result register(PatientAndPerson patientAndPerson){
-        Patient patient = patientAndPerson.getPatient();
-        List<ContactPerson> contactPersonList = patientAndPerson.getContactPersonList();
+    public Result register(CpVo CpVo) {
+        Patient patient = CpVo.getPatient();
+        List<ContactPersonVo> contactPersonVoList = CpVo.getContactPersonVoList();
+        List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
         Result result = checkPatient(patient);
         if (result != null) {
             return result;
         }
         try {
             patientRepository.save(patient);
-            cpService.register(contactPersonList);
-        }catch (Exception e) {
+            if (contactPersonVoList.size() > 0) {
+                for (int i = 0; i < contactPersonVoList.size(); i++) {
+                    ContactPerson contactPerson = new ContactPerson(patient.getPatientId(), contactPersonVoList.get(i).getRelationship(),
+                            contactPersonVoList.get(i).getEnglishName(), contactPersonVoList.get(i).getChineseName(),
+                            contactPersonVoList.get(i).getMobilePhoneAreaCode(), contactPersonVoList.get(i).getMobilePhone(),
+                            contactPersonVoList.get(i).getOtherPhoneAreaCode(), contactPersonVoList.get(i).getOtherPhone(),
+                            contactPersonVoList.get(i).getEmail(), contactPersonVoList.get(i).getDisplayOrder());
+                    contactPersonList.add(contactPerson);
+                }
+                cpService.register(contactPersonList);
+            }
+        } catch (Exception e) {
             logger.info(e.getMessage());
             return Result.buildError(CodeMsg.REGISTER_FAIL);
         }
         return Result.buildSuccess(CodeMsg.REGISTER_SUCCESS);
-
-
     }
 
-
-    public Result getPatient(String searchData) {
-        List<Patient> patientsList = null;
-        List<Patient> patientListTmp = null;
-        PatientAndPerson patientAndPerson = new PatientAndPerson();
-
-        //若传入的参数是数字，则根据patient id和手机号查询
+    public Result getPatient(Integer patientId) {
+        List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
         try {
-            Integer searchDataInt = Integer.valueOf(searchData);
-            patientsList = patientRepository.findByPatientId(searchDataInt);
-            patientListTmp = patientRepository.findByMobilePhone(searchDataInt);
-            if (patientListTmp.size() != 0) {
-                patientsList.addAll(patientListTmp);
-            }
-
+            Patient patient = patientRepository.findByPatientId(patientId);
+            contactPersonList = cpService.getContactPerson(patientId);
+            PatientAndPerson patientAndPerson = new PatientAndPerson(patient, contactPersonList);
+            return Result.buildSuccess(patientAndPerson);
         } catch (Exception e) {
             logger.info(e.getMessage());
+            return Result.buildError(CodeMsg.SERVICE_ERROR);
         }
+    }
 
-        //根据名字查询
-        if (patientsList == null || patientsList.size() == 0) {
-            try {
-                patientsList = patientRepository.findByEnglishGivenName(searchData);
-                patientListTmp = patientRepository.findByEnglishSurname(searchData);
-                if (patientListTmp.size() != 0) {
-                    patientsList.addAll(patientListTmp);
-                }
-            } catch (Exception e) {
-                logger.info(e.getMessage());
+    public Result getPatientList(String searchData) {
+        List<Patient> patientsList = new ArrayList<Patient>();
+        List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
+        List<PatientAndPerson> patientAndPersonList = new ArrayList<PatientAndPerson>();
+        try {
+            patientsList = patientRepository.findBysearchdata(searchData);
+            for (int i = 0; i < patientsList.size(); i++) {
+                contactPersonList = cpService.getContactPerson(patientsList.get(i).getPatientId());
+                PatientAndPerson patientAndPerson = new PatientAndPerson(patientsList.get(i), contactPersonList);
+                patientAndPersonList.add(patientAndPerson);
             }
+            return Result.buildSuccess(patientAndPersonList);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return Result.buildError(CodeMsg.SERVICE_ERROR);
         }
-
-        //patient查询出来只有一条，则返回跟病患相关的联系人
-        if (patientsList.size() == 1) {
-            List<ContactPerson> contactPersonList = cpService.getContactPerson(patientsList.get(0).getPatientId());
-            try {
-                patientAndPerson.setPatient(patientsList.get(0));
-                patientAndPerson.setContactPersonList(contactPersonList);
-                return Result.buildSuccess(patientAndPerson);
-            } catch(Exception e) {
-                logger.info(e.getMessage());
-            }
-        }
-        if (patientsList.size() == 0) {
-            return Result.buildError(CodeMsg.PATIENT_NOT_EXIST);
-        }
-        return Result.buildSuccess(patientsList);
     }
 
 
     public Result updatePatient(PatientAndPerson patientAndPerson) {
         Patient patient = patientAndPerson.getPatient();
         List<ContactPerson> contactPersonList = patientAndPerson.getContactPersonList();
-        Result result = checkPatient(patient);
-        if (result != null) {
-            return result;
-        }
         try {
-            patientRepository.updateById(patient.getPatientId(),patient.getDocumentType(),patient.getDocumentNumber(),
-                    patient.getEnglishSurname(),patient.getEnglishGivenName(),patient.getChineseName(),patient.getDateOrBirth(),
-                    patient.getSex(),patient.getMobilePhoneAreaCode(),patient.getMobilePhone(),patient.getHomePhoneAreaCode(),
-                    patient.getHomePhone(),patient.getRoom(),patient.getFloor(),patient.getBlock(),patient.getBuilding(),
-                    patient.getEstate(),patient.getStreet(),patient.getRegion(),patient.getDistrict());
+            patientRepository.updateById(patient.getPatientId(), patient.getDocumentType(), patient.getDocumentNumber(),
+                    patient.getEnglishSurname(), patient.getEnglishGivenName(), patient.getChineseName(), patient.getDateOrBirth(),
+                    patient.getSex(), patient.getMobilePhoneAreaCode(), patient.getMobilePhone(), patient.getHomePhoneAreaCode(),
+                    patient.getHomePhone(), patient.getRoom(), patient.getFloor(), patient.getBlock(), patient.getBuilding(),
+                    patient.getEstate(), patient.getStreet(), patient.getRegion(), patient.getDistrict());
             cpService.updatePatient(contactPersonList);
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -115,6 +105,7 @@ public class PatientService {
 
     /**
      * 判断Patient是否合法
+     *
      * @param patient
      * @return
      */
@@ -139,4 +130,5 @@ public class PatientService {
         }
         return null;
     }
+
 }
