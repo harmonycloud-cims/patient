@@ -90,11 +90,7 @@ public class PatientService {
         Patient patient = patientAndPerson.getPatient();
         List<ContactPerson> contactPersonList = patientAndPerson.getContactPersonList();
         try {
-            patientRepository.updateById(patient.getPatientId(), patient.getDocumentType(), patient.getDocumentNumber(),
-                    patient.getEnglishSurname(), patient.getEnglishGivenName(), patient.getChineseName(), patient.getDateOrBirth(),
-                    patient.getSex(), patient.getMobilePhoneAreaCode(), patient.getMobilePhone(), patient.getHomePhoneAreaCode(),
-                    patient.getHomePhone(), patient.getRoom(), patient.getFloor(), patient.getBlock(), patient.getBuilding(),
-                    patient.getEstate(), patient.getStreet(), patient.getRegion(), patient.getDistrict());
+            patientRepository.save(patient);
             cpService.updatePatient(contactPersonList);
         } catch (Exception e) {
             logger.info(e.getMessage());

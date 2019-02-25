@@ -26,7 +26,7 @@ public class ContactPersonService {
     @Transactional(rollbackFor = Exception.class)
     public String register(List<ContactPerson> contactPersonList) {
         if (contactPersonList != null) {
-            for (int i=0;i<contactPersonList.size();i++) {
+            for (int i = 0; i < contactPersonList.size(); i++) {
                 cpRepository.save(contactPersonList.get(i));
             }
         }
@@ -36,7 +36,7 @@ public class ContactPersonService {
     public List<ContactPerson> getContactPerson(Integer num) {
         List<ContactPerson> ContactPersonList = new ArrayList<ContactPerson>();
         try {
-            ContactPersonList =  cpRepository.findByPatientId(num);
+            ContactPersonList = cpRepository.findByPatientId(num);
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
@@ -46,13 +46,9 @@ public class ContactPersonService {
     @Transactional(rollbackFor = Exception.class)
     public String updatePatient(List<ContactPerson> contactPersonList) {
         if (contactPersonList != null) {
-            for (ContactPerson cpl :
-                    contactPersonList) {
-                cpRepository.updateByid(cpl.getPatientId(), cpl.getRelationship(),cpl.getEnglishName(),
-                        cpl.getChineseName(),cpl.getMobilePhoneAreaCode(),cpl.getMobilePhone(),cpl.getOtherPhoneAreaCode(),
-                        cpl.getOtherPhone(),cpl.getEmail(),cpl.getDisplayOrder());
+            for (int i = 0; i < contactPersonList.size(); i++) {
+                cpRepository.save(contactPersonList.get(i));
             }
-
         }
         return null;
     }
