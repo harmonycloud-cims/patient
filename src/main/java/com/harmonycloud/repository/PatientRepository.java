@@ -23,7 +23,7 @@ public interface PatientRepository extends JpaRepository<Patient,Integer> {
      * @param num
      * @return
      */
-    @Query(nativeQuery = true,value = "select * from \"patient\" where  to_char(\"mobile_phone\") like '%'||?1||'%' or to_char(\"patient_id\") like '%'||?1||'%' or \"english_given_name\" like '%'||?1||'%' or \"english_surname\" like '%'||?1||'%'")
-    List<Patient> findBysearchdata(String num);
+//    @Query(nativeQuery = true,value = "select * from \"patient\" where  to_char(\"mobile_phone\") like '%'||?1||'%' or to_char(\"document_number\") like '%'||?1||'%' or \"english_given_name\" like '%'||?1||'%' or \"english_surname\" like '%'||?1||'%'")
+    List<Patient> findBySearchContaining(String num);
 
 }

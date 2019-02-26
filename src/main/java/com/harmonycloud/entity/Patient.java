@@ -50,11 +50,13 @@ public class Patient {
     private String region;
     @Column(name = "district")
     private String district;
+    @Column(name = "search")
+    private String search;
 
     public Patient() {
     }
 
-    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOrBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district) {
+    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOrBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.englishSurname = englishSurname;
@@ -74,6 +76,7 @@ public class Patient {
         this.street = street;
         this.region = region;
         this.district = district;
+        this.search=search;
     }
 
     public Integer getPatientId() {
@@ -234,5 +237,13 @@ public class Patient {
 
     public void setDistrict(String district) {
         this.district = district;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

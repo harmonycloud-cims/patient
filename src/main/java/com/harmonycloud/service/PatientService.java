@@ -72,7 +72,7 @@ public class PatientService {
         List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
         List<PatientAndPerson> patientAndPersonList = new ArrayList<PatientAndPerson>();
         try {
-            patientsList = patientRepository.findBysearchdata(searchData);
+            patientsList = patientRepository.findBySearchContaining(searchData);
             for (int i = 0; i < patientsList.size(); i++) {
                 contactPersonList = cpService.getContactPerson(patientsList.get(i).getPatientId());
                 PatientAndPerson patientAndPerson = new PatientAndPerson(patientsList.get(i), contactPersonList);
