@@ -22,7 +22,7 @@ public class PatientController {
 
 
     @ApiOperation(value = "register patient", httpMethod = "POST")
-    @ApiImplicitParam(name = "CpVo", value = "patient entity", dataType = "CpVo")
+    @ApiImplicitParam(name = "cpVo", value = "patient entity", dataType = "CpVo")
     @PostMapping("/register")
     public Result register(@RequestBody CpVo cpVo) {
         return patientService.register(cpVo);

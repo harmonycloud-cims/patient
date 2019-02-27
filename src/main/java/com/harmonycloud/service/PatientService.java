@@ -121,7 +121,7 @@ public class PatientService {
         if (StringUtils.isEmpty(patient.getEnglishGivenName())) {
             return Result.buildError(CodeMsg.ENGLISH_GIVEN_NAME_EMPTY);
         }
-        if (patient.getDateOrBirth() == null) {
+        if (patient.getDateOfBirth() == null) {
             return Result.buildError(CodeMsg.DATE_OR_BIRTH_EMPTY);
         }
         return null;

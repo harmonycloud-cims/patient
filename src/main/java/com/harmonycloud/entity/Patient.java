@@ -22,8 +22,8 @@ public class Patient {
     private String englishGivenName;
     @Column(name = "chinese_name")
     private String chineseName;
-    @Column(name = "date_or_birth")
-    private String dateOrBirth;
+    @Column(name = "date_of_birth")
+    private String dateOfBirth;
     @Column(name = "sex")
     private String sex;
     @Column(name = "mobile_phone_area_code")
@@ -56,13 +56,13 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOrBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
+    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOfBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.englishSurname = englishSurname;
         this.englishGivenName = englishGivenName;
         this.chineseName = chineseName;
-        this.dateOrBirth = dateOrBirth;
+        this.dateOfBirth=dateOfBirth;
         this.sex = sex;
         this.mobilePhoneAreaCode = mobilePhoneAreaCode;
         this.mobilePhone = mobilePhone;
@@ -127,12 +127,12 @@ public class Patient {
         this.chineseName = chineseName;
     }
 
-    public String getDateOrBirth() {
-        return dateOrBirth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDateOrBirth(String dateOrBirth) {
-        this.dateOrBirth = dateOrBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getSex() {
