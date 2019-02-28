@@ -1,19 +1,20 @@
 package com.harmonycloud.vo;
 
+import com.harmonycloud.entity.ContactPerson;
 import com.harmonycloud.entity.Patient;
 
 import java.util.List;
 
 public class CpVo {
-   private Patient patient;
-    private List<ContactPersonVo> contactPersonVoList;
+    private Patient patient;
+    private List<ContactPerson> contactPeople;
 
     public CpVo() {
     }
 
-    public CpVo(Patient patient, List<ContactPersonVo> contactPersonVoList) {
+    public CpVo(Patient patient, List<ContactPerson> contactPeople) {
         this.patient = patient;
-        this.contactPersonVoList = contactPersonVoList;
+        this.contactPeople = contactPeople;
     }
 
     public Patient getPatient() {
@@ -24,11 +25,11 @@ public class CpVo {
         this.patient = patient;
     }
 
-    public List<ContactPersonVo> getContactPersonVoList() {
-        return contactPersonVoList;
+    public List<ContactPerson> getContactPeople() {
+        return contactPeople;
     }
 
-    public void setContactPersonVoList(List<ContactPersonVo> contactPersonVoList) {
-        this.contactPersonVoList = contactPersonVoList;
+    public void setContactPeople(List<ContactPerson> contactPeople) {
+        this.contactPeople = contactPeople;
     }
 }

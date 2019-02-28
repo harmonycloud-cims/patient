@@ -1,6 +1,5 @@
 package com.harmonycloud.controller;
 
-import com.harmonycloud.bo.PatientAndPerson;
 import com.harmonycloud.result.CodeMsg;
 import com.harmonycloud.result.Result;
 import com.harmonycloud.service.PatientService;
@@ -39,20 +38,10 @@ public class PatientController {
         return patientService.getPatientList(searchData);
     }
 
-    @ApiOperation(value = "get patient by patientId ", httpMethod = "POST")
-    @ApiImplicitParam(name = "patientId", value = "patientId", paramType = "query", dataType = "Integer")
-    @GetMapping("/getPatient")
-    public Result getPatient(@RequestParam("patientId") Integer patientId) {
-        if (patientId <= 0) {
-            return Result.buildError(CodeMsg.PATIENT_NOT_EXIST);
-        }
-        return patientService.getPatient(patientId);
-    }
-
     @ApiOperation(value = "update patient", httpMethod = "POST")
-    @ApiImplicitParam(name = "patientAndPerson", value = "patient and person", required = true, dataType = "PatientAndPerson")
+    @ApiImplicitParam(name = "cpVo", value = "patient and person", required = true, dataType = "CpVo")
     @PostMapping("/update")
-    public Result updatePatient(@RequestBody PatientAndPerson patientAndPerson) {
-        return patientService.updatePatient(patientAndPerson);
+    public Result updatePatient(@RequestBody CpVo cpVo) {
+        return patientService.updatePatient(cpVo);
     }
 }

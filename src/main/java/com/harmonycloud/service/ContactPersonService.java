@@ -11,10 +11,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author qidong
- * @date 2019/2/15
- */
+
 @Service
 public class ContactPersonService {
 
@@ -24,9 +21,10 @@ public class ContactPersonService {
     ContactPersonRepository cpRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public String register(List<ContactPerson> contactPersonList) {
+    public String register(List<ContactPerson> contactPersonList,Integer patientId) {
         if (contactPersonList != null) {
             for (int i = 0; i < contactPersonList.size(); i++) {
+                contactPersonList.get(i).setPatientId(patientId);
                 cpRepository.save(contactPersonList.get(i));
             }
         }

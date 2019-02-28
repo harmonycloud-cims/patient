@@ -11,6 +11,7 @@ import java.sql.Date;
 @Table(name = "patient")
 public class Patient {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer patientId;
     @Column(name = "document_type")
     private String documentType;
