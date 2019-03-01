@@ -20,8 +20,9 @@ public class UserPrincipalFactory {
             authorities.add(new SimpleGrantedAuthority(roles.get(i)));
         }
 
-        String userId = claims.get("userId").toString();
-        String loginName = claims.get("loginname").toString();
-        return new UserPrincipal(userId,loginName,authorities);
+        Integer userId = Integer.valueOf(claims.get("userId").toString());
+        String givenName = claims.get("givenname").toString();
+        String surName = claims.get("surname").toString();
+        return new UserPrincipal(userId,givenName,surName,authorities);
     }
 }

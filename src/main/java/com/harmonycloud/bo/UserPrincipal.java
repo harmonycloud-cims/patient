@@ -9,15 +9,18 @@ import java.util.Objects;
 public class UserPrincipal implements UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private String userId;
+    private Integer userId;
 
-    private String loginName;
+    private String givenName;
+
+    private String surName;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(String userId, String loginName, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Integer userId, String givenName, String surName,Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
-        this.loginName = loginName;
+        this.givenName = givenName;
+        this.surName = surName;
         this.authorities = authorities;
     }
 
@@ -69,6 +72,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return loginName;
+        String username = givenName+","+surName;
+        return username;
     }
 }
