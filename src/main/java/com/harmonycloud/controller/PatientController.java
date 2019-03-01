@@ -38,6 +38,16 @@ public class PatientController {
         return patientService.getPatientList(searchData);
     }
 
+    @ApiOperation(value = "get patient by patientId ", httpMethod = "POST")
+    @ApiImplicitParam(name = "patientId", value = "patientId", paramType = "query", dataType = "Integer")
+    @GetMapping("/getPatient")
+    public Result getPatient(@RequestParam("patientId") Integer patientId) {
+        if (patientId <= 0) {
+            return Result.buildError(CodeMsg.PATIENT_NOT_EXIST);
+        }
+        return patientService.getPatient(patientId);
+    }
+
     @ApiOperation(value = "update patient", httpMethod = "POST")
     @ApiImplicitParam(name = "cpVo", value = "patient and person", required = true, dataType = "CpVo")
     @PostMapping("/update")

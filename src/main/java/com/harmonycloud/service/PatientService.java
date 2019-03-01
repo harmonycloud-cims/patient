@@ -1,5 +1,6 @@
 package com.harmonycloud.service;
 
+import com.harmonycloud.bo.PatientBo;
 import com.harmonycloud.entity.ContactPerson;
 import com.harmonycloud.entity.Patient;
 import com.harmonycloud.repository.PatientRepository;
@@ -12,8 +13,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class PatientService {
@@ -26,7 +29,7 @@ public class PatientService {
 
     public Result register(CpVo CpVo) {
         Patient patient = CpVo.getPatient();
-        List<ContactPerson> contactPersonList = CpVo.getContactPeople();
+        List<ContactPerson> contactPersonList = CpVo.getContactPeopleList();
         Result result = checkPatient(patient);
         if (result != null) {
             return result;
@@ -39,6 +42,28 @@ public class PatientService {
             return Result.buildError(CodeMsg.REGISTER_FAIL);
         }
         return Result.buildSuccess(CodeMsg.REGISTER_SUCCESS);
+    }
+
+    public Result getPatient(Integer patientId) {
+        DateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
+        try {
+            Patient patient = patientRepository.findByPatientId(patientId);
+            String patientDocType = patient.getDocumentType();
+            String patientDocNum = patient.getDocumentNumber();
+            String patientName = patient.getEnglishGivenName()+","+patient.getEnglishSurname()+"("+patient.getChineseName()+")";
+            String patientDob = patient.getDateOfBirth();
+            Calendar cal = Calendar.getInstance();
+            Integer year = cal.get(Calendar.YEAR);
+            cal.setTime(sdf.parse(patientDob));
+            Integer yearbirth = cal.get(Calendar.YEAR);
+            Integer age= year-yearbirth;
+            PatientBo patientBo = new PatientBo(patientName,patientDocType,patientDocNum,patientDob,age+"Y",patient.getSex());
+            return Result.buildSuccess(patientBo);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return Result.buildError(CodeMsg.SERVICE_ERROR);
+        }
+
     }
 
     public Result getPatientList(String searchData) {
@@ -62,7 +87,7 @@ public class PatientService {
 
     public Result updatePatient(CpVo cpVo) {
         Patient patient = cpVo.getPatient();
-        List<ContactPerson> contactPersonList = cpVo.getContactPeople();
+        List<ContactPerson> contactPersonList = cpVo.getContactPeopleList();
         try {
             patientRepository.save(patient);
             cpService.updatePatient(contactPersonList);
