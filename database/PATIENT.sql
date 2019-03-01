@@ -11,7 +11,7 @@
  Target Server Version : 110200
  File Encoding         : 65001
 
- Date: 21/02/2019 19:43:07
+ Date: 01/03/2019 10:53:43
 */
 
 
@@ -28,10 +28,10 @@ CREATE TABLE "PATIENT"."contact_person" (
   "relationship" VARCHAR2(255 BYTE) ,
   "english_name" VARCHAR2(255 BYTE) ,
   "chinese_name" VARCHAR2(255 BYTE) ,
-  "mobile_phone_area_code" NUMBER ,
-  "mobile_phone" NUMBER ,
-  "other_phone_area_code" NUMBER ,
-  "other_phone" NUMBER ,
+  "mobile_phone_area_code" VARCHAR2(255 BYTE) ,
+  "mobile_phone" VARCHAR2(255 BYTE) ,
+  "other_phone_area_code" VARCHAR2(255 BYTE) ,
+  "other_phone" VARCHAR2(255 BYTE) ,
   "email" VARCHAR2(255 BYTE) ,
   "display_order" NUMBER 
 )
@@ -71,24 +71,25 @@ DROP TABLE "PATIENT"."patient";
 CREATE TABLE "PATIENT"."patient" (
   "patient_id" NUMBER NOT NULL ,
   "document_type" VARCHAR2(255 BYTE) ,
-  "document_number" NUMBER ,
+  "document_number" VARCHAR2(100 BYTE) ,
   "english_surname" VARCHAR2(255 BYTE) ,
   "english_given_name" VARCHAR2(255 BYTE) ,
   "chinese_name" VARCHAR2(255 BYTE) ,
-  "date_or_birth" DATE ,
+  "date_of_birth" VARCHAR2(100 BYTE) ,
   "sex" VARCHAR2(255 BYTE) ,
-  "mobile_phone_area_code" NUMBER ,
-  "mobile_phone" NUMBER ,
-  "home_phone_area_code" NUMBER ,
-  "home_phone" NUMBER ,
-  "room" NUMBER ,
-  "floor" NUMBER ,
+  "mobile_phone_area_code" VARCHAR2(255 BYTE) ,
+  "mobile_phone" VARCHAR2(255 BYTE) ,
+  "home_phone_area_code" VARCHAR2(255 BYTE) ,
+  "home_phone" VARCHAR2(255 BYTE) ,
+  "room" VARCHAR2(255 BYTE) ,
+  "floor" VARCHAR2(255 BYTE) ,
   "block" VARCHAR2(255 BYTE) ,
   "building" VARCHAR2(255 BYTE) ,
   "estate" VARCHAR2(255 BYTE) ,
   "street" VARCHAR2(255 BYTE) ,
   "region" VARCHAR2(255 BYTE) ,
-  "district" VARCHAR2(255 BYTE) 
+  "district" VARCHAR2(255 BYTE) ,
+  "search" VARCHAR2(255 BYTE) 
 )
 TABLESPACE "SYSTEM"
 LOGGING
@@ -113,7 +114,7 @@ COMMENT ON COLUMN "PATIENT"."patient"."document_number" IS 'Document number';
 COMMENT ON COLUMN "PATIENT"."patient"."english_surname" IS 'English surname';
 COMMENT ON COLUMN "PATIENT"."patient"."english_given_name" IS 'English given name';
 COMMENT ON COLUMN "PATIENT"."patient"."chinese_name" IS 'Chinese name';
-COMMENT ON COLUMN "PATIENT"."patient"."date_or_birth" IS 'Birth day';
+COMMENT ON COLUMN "PATIENT"."patient"."date_of_birth" IS 'Birth day';
 COMMENT ON COLUMN "PATIENT"."patient"."sex" IS 'sex';
 COMMENT ON COLUMN "PATIENT"."patient"."mobile_phone_area_code" IS 'Mobile phone area code';
 COMMENT ON COLUMN "PATIENT"."patient"."mobile_phone" IS 'Mobile phone';
