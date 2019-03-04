@@ -7,14 +7,14 @@ import java.util.List;
 
 public class CpVo {
     private Patient patient;
-    private List<ContactPerson> contactPeopleList;
+    private List<ContactPerson> contactPersonList;
 
     public CpVo() {
     }
 
-    public CpVo(Patient patient, List<ContactPerson> contactPeopleList) {
+    public CpVo(Patient patient, List<ContactPerson> contactPersonList) {
         this.patient = patient;
-        this.contactPeopleList = contactPeopleList;
+        this.contactPersonList = contactPersonList;
     }
 
     public Patient getPatient() {
@@ -25,11 +25,11 @@ public class CpVo {
         this.patient = patient;
     }
 
-    public List<ContactPerson> getContactPeopleList() {
-        return contactPeopleList;
+    public List<ContactPerson> getContactPersonList() {
+        return contactPersonList;
     }
 
-    public void setContactPeopleList(List<ContactPerson> contactPeopleList) {
-        this.contactPeopleList = contactPeopleList;
+    public void setContactPersonList(List<ContactPerson> contactPersonList) {
+        this.contactPersonList = contactPersonList;
     }
 }

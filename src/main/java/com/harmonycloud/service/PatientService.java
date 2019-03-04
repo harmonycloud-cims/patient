@@ -29,7 +29,7 @@ public class PatientService {
 
     public Result register(CpVo CpVo) {
         Patient patient = CpVo.getPatient();
-        List<ContactPerson> contactPersonList = CpVo.getContactPeopleList();
+        List<ContactPerson> contactPersonList = CpVo.getContactPersonList();
         Result result = checkPatient(patient);
         if (result != null) {
             return result;
@@ -87,7 +87,7 @@ public class PatientService {
 
     public Result updatePatient(CpVo cpVo) {
         Patient patient = cpVo.getPatient();
-        List<ContactPerson> contactPersonList = cpVo.getContactPeopleList();
+        List<ContactPerson> contactPersonList = cpVo.getContactPersonList();
         try {
             patientRepository.save(patient);
             cpService.updatePatient(contactPersonList);
