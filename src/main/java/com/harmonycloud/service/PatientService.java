@@ -44,18 +44,14 @@ public class PatientService {
         return Result.buildSuccess(CodeMsg.REGISTER_SUCCESS);
     }
 
+    /**
+     * 处理patient的一些简单信息并返回
+     * @param patientId
+     * @return
+     */
     public Result getPatient(Integer patientId) {
         try {
             Patient patient = patientRepository.findByPatientId(patientId);
-//            String patientDocType = patient.getDocumentType();
-//            String patientDocNum = patient.getDocumentNumber();
-//            String patientName = patient.getEnglishGivenName()+","+patient.getEnglishSurname()+"("+patient.getChineseName()+")";
-//            Calendar cal = Calendar.getInstance();
-//            Integer year = cal.get(Calendar.YEAR);
-//            cal.setTime(patient.getDateOfBirth());
-//            Integer yearbirth = cal.get(Calendar.YEAR);
-//            Integer age= year-yearbirth;
-//            PatientBo patientBo = new PatientBo(patientName,patientDocType,patientDocNum,patient.getDateOfBirth(),age+"Y",patient.getSex());
             PatientBo patientBo = new PatientBo(patient.getDocumentType(), patient.getDocumentNumber(),
                     patient.getEnglishSurname(), patient.getEnglishGivenName(), patient.getChineseName(),
                     patient.getDateOfBirth(), patient.getSex());
