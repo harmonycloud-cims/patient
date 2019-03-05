@@ -45,19 +45,20 @@ public class PatientService {
     }
 
     public Result getPatient(Integer patientId) {
-        DateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
+//        DateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy",Locale.ENGLISH);
         try {
             Patient patient = patientRepository.findByPatientId(patientId);
             String patientDocType = patient.getDocumentType();
             String patientDocNum = patient.getDocumentNumber();
             String patientName = patient.getEnglishGivenName()+","+patient.getEnglishSurname()+"("+patient.getChineseName()+")";
-            String patientDob = patient.getDateOfBirth();
+//            String patientDob = patient.getDateOfBirth();
             Calendar cal = Calendar.getInstance();
             Integer year = cal.get(Calendar.YEAR);
-            cal.setTime(sdf.parse(patientDob));
+//            cal.setTime(sdf.parse(patientDob));
+            cal.setTime(patient.getDateOfBirth());
             Integer yearbirth = cal.get(Calendar.YEAR);
             Integer age= year-yearbirth;
-            PatientBo patientBo = new PatientBo(patientName,patientDocType,patientDocNum,patientDob,age+"Y",patient.getSex());
+            PatientBo patientBo = new PatientBo(patientName,patientDocType,patientDocNum,patient.getDateOfBirth(),age+"Y",patient.getSex());
             return Result.buildSuccess(patientBo);
         } catch (Exception e) {
             logger.info(e.getMessage());

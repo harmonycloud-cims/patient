@@ -1,7 +1,8 @@
 package com.harmonycloud.entity;
 
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author qidong
@@ -24,7 +25,7 @@ public class Patient {
     @Column(name = "chinese_name")
     private String chineseName;
     @Column(name = "date_of_birth")
-    private String dateOfBirth;
+    private Date dateOfBirth;
     @Column(name = "sex")
     private String sex;
     @Column(name = "mobile_phone_area_code")
@@ -57,7 +58,7 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, String dateOfBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
+    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, Date dateOfBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.englishSurname = englishSurname;
@@ -128,11 +129,11 @@ public class Patient {
         this.chineseName = chineseName;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -247,4 +248,5 @@ public class Patient {
     public void setSearch(String search) {
         this.search = search;
     }
+
 }

@@ -38,7 +38,7 @@ public class PatientController {
         return patientService.getPatientList(searchData);
     }
 
-    @ApiOperation(value = "get patient by patientId ", httpMethod = "POST")
+    @ApiOperation(value = "get patient by patientId ", httpMethod = "GET")
     @ApiImplicitParam(name = "patientId", value = "patientId", paramType = "query", dataType = "Integer")
     @GetMapping("/getPatient")
     public Result getPatient(@RequestParam("patientId") Integer patientId) {

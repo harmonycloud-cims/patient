@@ -1,17 +1,19 @@
 package com.harmonycloud.bo;
 
+import java.util.Date;
+
 public class PatientBo {
     private String name;
-    private  String patientDocType;
+    private String patientDocType;
     private String patientDocNum;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private String  year;
     private String sex;
 
     public PatientBo() {
     }
 
-    public PatientBo(String name, String patientDocType, String patientDocNum, String dateOfBirth, String year, String sex) {
+    public PatientBo(String name, String patientDocType, String patientDocNum, Date dateOfBirth, String year, String sex) {
         this.name = name;
         this.patientDocType = patientDocType;
         this.patientDocNum = patientDocNum;
@@ -44,11 +46,11 @@ public class PatientBo {
         this.patientDocNum = patientDocNum;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
