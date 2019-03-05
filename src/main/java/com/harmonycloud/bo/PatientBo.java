@@ -1,49 +1,69 @@
 package com.harmonycloud.bo;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 public class PatientBo {
-    private String name;
-    private String patientDocType;
-    private String patientDocNum;
+    private String documentType;
+    private String documentNumber;
+    private String englishSurname;
+    private String englishGivenName;
+    private String chineseName;
     private Date dateOfBirth;
-    private String  year;
     private String sex;
 
     public PatientBo() {
     }
 
-    public PatientBo(String name, String patientDocType, String patientDocNum, Date dateOfBirth, String year, String sex) {
-        this.name = name;
-        this.patientDocType = patientDocType;
-        this.patientDocNum = patientDocNum;
+    public PatientBo(String documentType, String documentNumber, String englishSurname,
+                     String englishGivenName, String chineseName, Date dateOfBirth, String sex) {
+        this.documentType = documentType;
+        this.documentNumber = documentNumber;
+        this.englishSurname = englishSurname;
+        this.englishGivenName = englishGivenName;
+        this.chineseName = chineseName;
         this.dateOfBirth = dateOfBirth;
-        this.year = year;
         this.sex = sex;
     }
 
-    public String getName() {
-        return name;
+    public String getDocumentType() {
+        return documentType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 
-    public String getPatientDocType() {
-        return patientDocType;
+    public String getDocumentNumber() {
+        return documentNumber;
     }
 
-    public void setPatientDocType(String patientDocType) {
-        this.patientDocType = patientDocType;
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
     }
 
-    public String getPatientDocNum() {
-        return patientDocNum;
+    public String getEnglishSurname() {
+        return englishSurname;
     }
 
-    public void setPatientDocNum(String patientDocNum) {
-        this.patientDocNum = patientDocNum;
+    public void setEnglishSurname(String englishSurname) {
+        this.englishSurname = englishSurname;
+    }
+
+    public String getEnglishGivenName() {
+        return englishGivenName;
+    }
+
+    public void setEnglishGivenName(String englishGivenName) {
+        this.englishGivenName = englishGivenName;
+    }
+
+    public String getChineseName() {
+        return chineseName;
+    }
+
+    public void setChineseName(String chineseName) {
+        this.chineseName = chineseName;
     }
 
     public Date getDateOfBirth() {
@@ -52,14 +72,6 @@ public class PatientBo {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
     }
 
     public String getSex() {
