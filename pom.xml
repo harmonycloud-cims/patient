@@ -104,7 +104,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>patient</finalName>
+        <finalName>ROOT</finalName>
     </build>
 
 </project>
