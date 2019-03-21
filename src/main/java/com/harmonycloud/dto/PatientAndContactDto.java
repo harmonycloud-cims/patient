@@ -1,18 +1,18 @@
-package com.harmonycloud.vo;
+package com.harmonycloud.dto;
 
 import com.harmonycloud.entity.ContactPerson;
 import com.harmonycloud.entity.Patient;
 
 import java.util.List;
 
-public class CpVo {
+public class PatientAndContactDto {
     private Patient patient;
     private List<ContactPerson> contactPersonList;
 
-    public CpVo() {
+    public PatientAndContactDto() {
     }
 
-    public CpVo(Patient patient, List<ContactPerson> contactPersonList) {
+    public PatientAndContactDto(Patient patient, List<ContactPerson> contactPersonList) {
         this.patient = patient;
         this.contactPersonList = contactPersonList;
     }

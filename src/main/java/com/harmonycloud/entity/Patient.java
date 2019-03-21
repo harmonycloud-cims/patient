@@ -5,7 +5,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * @author qidong
  * @date 2019/2/13
  */
 @Entity
@@ -58,13 +57,16 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName, String chineseName, Date dateOfBirth, String sex, String mobilePhoneAreaCode, String mobilePhone, String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building, String estate, String street, String region, String district,String search) {
+    public Patient(String documentType, String documentNumber, String englishSurname, String englishGivenName,
+                   String chineseName, Date dateOfBirth, String sex, String mobilePhoneAreaCode, String mobilePhone,
+                   String homePhoneAreaCode, String homePhone, String room, String floor, String block, String building,
+                   String estate, String street, String region, String district, String search) {
         this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.englishSurname = englishSurname;
         this.englishGivenName = englishGivenName;
         this.chineseName = chineseName;
-        this.dateOfBirth=dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.mobilePhoneAreaCode = mobilePhoneAreaCode;
         this.mobilePhone = mobilePhone;
@@ -78,7 +80,7 @@ public class Patient {
         this.street = street;
         this.region = region;
         this.district = district;
-        this.search=search;
+        this.search = search;
     }
 
     public Integer getPatientId() {

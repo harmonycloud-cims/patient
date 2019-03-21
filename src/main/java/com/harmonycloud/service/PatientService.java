@@ -1,21 +1,19 @@
 package com.harmonycloud.service;
 
-import com.harmonycloud.bo.PatientBo;
+import com.harmonycloud.dto.PatientAndContactDto;
 import com.harmonycloud.entity.ContactPerson;
 import com.harmonycloud.entity.Patient;
+import com.harmonycloud.enums.ErrorMsgEnum;
+import com.harmonycloud.exception.PatientException;
 import com.harmonycloud.repository.PatientRepository;
-import com.harmonycloud.result.CodeMsg;
-import com.harmonycloud.result.Result;
-import com.harmonycloud.vo.CpVo;
+import com.harmonycloud.result.CimsResponseWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -27,97 +25,104 @@ public class PatientService {
     @Resource
     private ContactPersonService cpService;
 
-    public Result register(CpVo CpVo) {
-        Patient patient = CpVo.getPatient();
-        List<ContactPerson> contactPersonList = CpVo.getContactPersonList();
-        Result result = checkPatient(patient);
-        if (result != null) {
+    /**
+     * register patient
+     *
+     * @param patientAndContactDto
+     * @return
+     * @throws Exception
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean register(PatientAndContactDto patientAndContactDto) throws Exception {
+        Patient patient = patientAndContactDto.getPatient();
+        List<ContactPerson> contactPersonList = patientAndContactDto.getContactPersonList();
+        boolean result = false;
+        if (!checkPatient(patient)) {
             return result;
         }
-        try {
-            patientRepository.save(patient);
-            cpService.register(contactPersonList,patient.getPatientId());
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return Result.buildError(CodeMsg.REGISTER_FAIL);
-        }
-        return Result.buildSuccess(CodeMsg.REGISTER_SUCCESS);
+        patientRepository.save(patient);
+        cpService.register(contactPersonList, patient.getPatientId());
+
+        return result;
     }
 
     /**
-     * 处理patient的一些简单信息并返回
+     * get patient some information by patient id
+     *
      * @param patientId
      * @return
+     * @throws Exception
      */
-    public Result getPatient(Integer patientId) {
-        try {
-            Patient patient = patientRepository.findByPatientId(patientId);
-            PatientBo patientBo = new PatientBo(patient.getDocumentType(), patient.getDocumentNumber(),
-                    patient.getEnglishSurname(), patient.getEnglishGivenName(), patient.getChineseName(),
-                    patient.getDateOfBirth(), patient.getSex());
-            return Result.buildSuccess(patientBo);
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return Result.buildError(CodeMsg.SERVICE_ERROR);
-        }
-
-    }
-
-    public Result getPatientList(String searchData) {
-        List<Patient> patientList = new ArrayList<Patient>();
-        List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
-        List<CpVo> cpVoList = new ArrayList<CpVo>();
-        try {
-            patientList = patientRepository.findBySearchContaining(searchData);
-            for (int i = 0; i < patientList.size(); i++) {
-                contactPersonList = cpService.getContactPerson(patientList.get(i).getPatientId());
-                CpVo cpVo = new CpVo(patientList.get(i), contactPersonList);
-                cpVoList.add(cpVo);
-            }
-            return Result.buildSuccess(cpVoList);
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return Result.buildError(CodeMsg.SERVICE_ERROR);
-        }
-    }
-
-
-    public Result updatePatient(CpVo cpVo) {
-        Patient patient = cpVo.getPatient();
-        List<ContactPerson> contactPersonList = cpVo.getContactPersonList();
-        try {
-            patientRepository.save(patient);
-            cpService.updatePatient(contactPersonList);
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return Result.buildError(CodeMsg.UPDATE_FAIL);
-        }
-        return Result.buildSuccess(CodeMsg.UPDATE_SUCCESS);
+    public Patient getPatient(Integer patientId) throws Exception {
+        Patient patient = patientRepository.findByPatientId(patientId);
+        return patient;
     }
 
     /**
-     * 判断Patient是否合法
+     * get patient list by search data
+     *
+     * @param searchData
+     * @return
+     * @throws Exception
+     */
+    public List<PatientAndContactDto> getPatientList(String searchData) throws Exception {
+        List<Patient> patientList = new ArrayList<>();
+        List<ContactPerson> contactPersonList = new ArrayList<ContactPerson>();
+        List<PatientAndContactDto> patientAndContactDtoList = new ArrayList<PatientAndContactDto>();
+
+        patientList = patientRepository.findBySearchContaining(searchData);
+        for (int i = 0; i < patientList.size(); i++) {
+            contactPersonList = cpService.getContactPerson(patientList.get(i).getPatientId());
+            PatientAndContactDto patientAndContactDto = new PatientAndContactDto(patientList.get(i), contactPersonList);
+            patientAndContactDtoList.add(patientAndContactDto);
+        }
+        return patientAndContactDtoList;
+    }
+
+
+    /**
+     * update patient
+     *
+     * @param patientAndContactDto
+     * @return
+     * @throws Exception
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updatePatient(PatientAndContactDto patientAndContactDto) throws Exception {
+        Patient patient = patientAndContactDto.getPatient();
+        List<ContactPerson> contactPersonList = patientAndContactDto.getContactPersonList();
+        boolean result = checkPatient(patient);
+        if (!result) {
+            return result;
+        }
+        patientRepository.save(patient);
+        cpService.updatePatient(contactPersonList);
+        return result;
+    }
+
+    /**
+     * check Patient paramter is corrent
      *
      * @param patient
      * @return
      */
-    private Result checkPatient(Patient patient) {
+    private boolean checkPatient(Patient patient) {
         if (StringUtils.isEmpty(patient.getDocumentType())) {
-            return Result.buildError(CodeMsg.DOCUMENT_TYPE_EMPTY);
+            return false;
         }
         if (StringUtils.isEmpty(patient.getEnglishSurname())) {
-            return Result.buildError(CodeMsg.ENGLISH_SURNAME__EMPTY);
+            return false;
         }
         if (patient.getDocumentNumber() == null) {
-            return Result.buildError(CodeMsg.DOCUMENT_NUMBER_EMPTY);
+            return false;
         }
         if (StringUtils.isEmpty(patient.getEnglishGivenName())) {
-            return Result.buildError(CodeMsg.ENGLISH_GIVEN_NAME_EMPTY);
+            return false;
         }
         if (patient.getDateOfBirth() == null) {
-            return Result.buildError(CodeMsg.DATE_OR_BIRTH_EMPTY);
+            return false;
         }
-        return null;
+        return true;
     }
 
 }
