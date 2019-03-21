@@ -4,7 +4,7 @@
     <jmxConfigurator/>
     <property name="LOG_PATH"
               value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
-    <property name="APP_NAME" value="Appointment"/>
+    <property name="APP_NAME" value="Patient"/>
     <appender name="INFO_FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_PATH}/${APP_NAME}/info.com.harmonycloud.log</File>
