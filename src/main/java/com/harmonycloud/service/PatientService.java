@@ -36,14 +36,12 @@ public class PatientService {
     public boolean register(PatientAndContactDto patientAndContactDto) throws Exception {
         Patient patient = patientAndContactDto.getPatient();
         List<ContactPerson> contactPersonList = patientAndContactDto.getContactPersonList();
-        boolean result = false;
         if (!checkPatient(patient)) {
-            return result;
+            return false;
         }
         patientRepository.save(patient);
         cpService.register(contactPersonList, patient.getPatientId());
-
-        return result;
+        return true;
     }
 
     /**

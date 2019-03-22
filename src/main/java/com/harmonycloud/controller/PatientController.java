@@ -71,7 +71,7 @@ public class PatientController {
     @ApiImplicitParam(name = "patientId", value = "patientId", paramType = "query", dataType = "Integer")
     @GetMapping("/getPatient")
     public CimsResponseWrapper<Patient> getPatient(@RequestParam("patientId") Integer patientId) throws Exception {
-        if (patientId == null) {
+        if (patientId == null || patientId < 0) {
             return new CimsResponseWrapper<>(false, ErrorMsgEnum.PATIENT_NOT_EXIST.getMessage(), null);
         }
         Patient patient = patientService.getPatient(patientId);
