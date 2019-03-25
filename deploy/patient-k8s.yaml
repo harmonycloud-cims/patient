@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: patient
+    version: v1
+  name: patient
+  namespace: dhcims-msapoc-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: patient
+  template:
+    metadata:
+      labels:
+        app: patient
+        version: v1
+    spec:
+      containers:
+      - name: patient
+        env:
+        - name: TZ
+          value: Asia/Shanghai
+        - name: ORACLE_USER
+          valueFrom:
+            secretKeyRef:
+              name: patient-oracle
+              key: user
+        - name: ORACLE_PWD
+          valueFrom:
+            secretKeyRef:
+              name: patient-oracle
+              key: pwd
+        image: <image-name>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 600m
+            memory: 1536Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /opt/webserver/lib/application.properties
+          name: application-config
+          subPath: application.properties
+        - mountPath: /opt/webserver/lib/logback.xml
+          name: logs-config
+          subPath: logback.xml
+        - mountPath: /app-logs
+          name: logs-dir
+      volumes:
+      - configMap:
+          items:
+          - key: application.properties
+            path: application.properties
+          name: patient-config
+        name: application-config
+      - configMap:
+          items:
+          - key: logback.xml
+            path: logback.xml
+          name: patient-logs
+        name: logs-config
+      - name: logs-dir
+        emptyDir: {}

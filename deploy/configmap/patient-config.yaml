@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: patient-config
+  namespace: dhcims-msapoc-dev
+data:
+  application.properties: |-
+    server.port=${port:8080}
+    spring.application.name=patient
+    spring.datasource.url=jdbc:oracle:thin:@cimvmc1a:19305:cimc1d1
+    spring.datasource.username=${ORACLE_USER}
+    spring.datasource.password=${ORACLE_PWD}
+    spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+    spring.jpa.hibernate.ddl-auto=validate
+    spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+    security.publicKey=http://user/publicKey
+    #server.port=8887
+    logging.path=/app-logs
+    logging.config=classpath:logback.xml

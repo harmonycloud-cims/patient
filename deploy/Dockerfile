@@ -1,7 +1,6 @@
-FROM java:8-jdk-alpine
-WORKDIR /usr/src/app
-COPY target/*.jar ./app.jar
-RUN apk --no-cache add tzdata curl  && \
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone
-ENTRYPOINT ["java","-jar","./app.jar", "--port=80"]
+FROM openshift/jboss-webserver31-tomcat8-openshift:1.2
+
+COPY *.war /opt/webserver/webapps/ROOT.war
+
+EXPOSE 80
+CMD ["/opt/webserver/bin/catalina.sh","run"]
